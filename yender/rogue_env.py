@@ -1,8 +1,11 @@
 import copy
+import numpy as np
 
-import .renderer
+from yender.renderer import raytrace
+from yender.block import Block, block_to_triangles
+from yender.map import Map
 
-def map_to_ob(map_, pos, direction):
+def map_to_block_ob(map_, pos, direction):
     look_dict = {}
     look_dict[(-1, 0)] = [
         np.asarray([-2,-1]), np.asarray([-2, 0]), np.asarray([-2, 1]),
@@ -31,14 +34,14 @@ def map_to_ob(map_, pos, direction):
         blocks.append(block_id)
     return blocks
 
-def map_to_image(size, map_, pos, yaw, pitch=-30):
+def map_to_scene_image(size, map_, pos, yaw, pitch=-30):
     block_triangles = []
     block_colors = []
     for y in range(map_.size[0]):
         for x in range(map_.size[1]):
             block = map_.get_block((y, x))
             if block.name != "air":
-                triangles, colors = raytrace.block_to_triangles((x, y), block)
+                triangles, colors = block_to_triangles(block, (x, y))
                 block_triangles.extend([tri.tolist() for tri in triangles])
                 block_colors.extend([list(c) for c in colors])
             else:
@@ -64,8 +67,7 @@ def map_to_image(size, map_, pos, yaw, pitch=-30):
     #block_triangles = np.concatenate(block_triangles)
     #print(block_triangles.shape)
     print(pos)
-    image = raytrace_cpp.raytrace2(size[0], size[1],
-            [pos[1]+0.5,pos[0]+0.5,0.85],
+    image = raytrace(size, [pos[1]+0.5,pos[0]+0.5,0.85],
             20, yaw, pitch, block_triangles, block_colors)
     return np.asarray(image).astype(np.uint8)
 
@@ -76,7 +78,7 @@ def map_to_top_view_image(size, map_):
         for x in range(map_.size[1]):
             block = map_.get_block((y, x))
             if block.name != "air":
-                triangles, colors = raytrace.block_to_triangles((x, y), block)
+                triangles, colors = block_to_triangles((x, y), block)
                 block_triangles.extend([tri.tolist() for tri in triangles])
                 block_colors.extend([list(c) for c in colors])
             else:
@@ -106,7 +108,7 @@ def map_to_top_view_image(size, map_):
             1000, 180, -90, block_triangles, block_colors)
     return np.asarray(image).astype(np.uint8)
 
-def print_ob(ob):
+def print_block_ob(ob):
     for i in range(len(ob)):
         if i%3 == 0:
             print()
@@ -114,7 +116,7 @@ def print_ob(ob):
             print("^", end="")
         print(ob[i], end="")
 
-def ob_to_hot_vectors(ob, block_type_num):
+def block_ob_to_hot_vectors(ob, block_type_num):
     hot_vectors = np.zeros((3*3-1, block_type_num), dtype=np.float32)
     for i in range(len(ob)):
         hot_vectors[i][ob[i]] = 1.0

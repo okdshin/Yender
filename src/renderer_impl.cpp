@@ -178,10 +178,30 @@ std::vector<std::vector<std::vector<uint8_t>>> raytrace2(int image_width, int im
 namespace py = pybind11;
 
 PYBIND11_PLUGIN(renderer_impl) {
-    py::module m("renderer_impl", "cpp implementation for rendering engine");
+    py::module m("yender.renderer_impl", R"pbdoc(
+		cpp implementation for rendering engine
+		---------------------------------------
 
-    m.def("raytrace", &raytrace, "A function which make image with raytrace (stable slow)");
-    m.def("raytrace2", &raytrace2, "A function which make image with raytrace (quick)");
+		.. currentmodule:: yender.renderer_impl
+
+		.. autosummary::
+			:toctree: _generate
+
+			raytrace
+			raytrace2
+	)pbdoc");
+
+    m.def("raytrace", &raytrace, R"pbdoc(
+		Make image with raytrace (stable slow)
+
+		todo
+	)pbdoc");
+
+    m.def("raytrace2", &raytrace2, R"pbdoc(
+		Make image with raytrace (quick)
+
+		todo
+	)pbdoc");
 
     return m.ptr();
 }

@@ -59,7 +59,7 @@ class CMakeBuild(build_ext):
 setup(
     name="Yender",
     packages=["yender"],
-    ext_modules=[CMakeExtension('yender.impl.renderer_impl')],
+    ext_modules=[CMakeExtension('yender.renderer_impl')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
     description="Rogue-like based LR platform",
