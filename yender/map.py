@@ -2,9 +2,13 @@ import copy
 from .block import Block
 
 class Map:
+    '''Map class
+
+    Args:
+        size (tuple of two int): size
+        data (list of Block): block list
     '''
-    Map class
-    '''
+
     def __init__(self, size=(3, 3), data=[Block() for _ in range(3*3)]):
         self.size = size
         self.data = data
@@ -18,8 +22,27 @@ class Map:
 
         Args:
             pos (tuple of two ints): target block position
+
+        Returns:
+            Block: corresponding block
         '''
         return self.data[self._index(pos)]
+
+    def safe_get_block(self, pos, default_block):
+        '''Getter (safe version)
+
+        This function returns default_block if pos is out of area.
+
+        Args:
+            pos (tuple of two ints): target block position
+            default_block (Block): default block when pos is out of area
+
+        Returns:
+            Block: corresponding block or default_block
+        '''
+        if pos[0] < 0 or self.size[0] <= pos[0] or pos[1] < 0 or self.size[1] <= pos[1]:
+            return default_block
+        return self.get_block(pos)
 
     def set_block(self, pos, block):
         '''Setter
@@ -27,6 +50,9 @@ class Map:
         Args:
             pos (tuple of two ints): target block position
             block (~yender.Block): block to be set
+
+        Returns:
+            None: None
         '''
         assert isinstance(block, Block)
         self.data[self._index(pos)] = copy.copy(block)
@@ -40,8 +66,15 @@ class Map:
 
 
 def load_map(block_set, block_list):
-    '''
-    load map from source
+    '''load map from source
+    #TODO
+
+    Args:
+        block_set (dict of (indicator, Block)): block set included in map
+        block_list (list of str): source of map
+
+    Returns:
+        tuple of Map and positions: loaded map and annotated positions
     '''
     data = []
     positions = {}

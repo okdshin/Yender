@@ -15,7 +15,6 @@ def raytrace(image_size, origin, f, yaw, pitch, triangles, colors):
 
     Returns:
         list of list of list of int: rendered image (channel, x, y)
-        
     '''
     return impl.raytrace2(image_size[0], image_size[1], origin, f, yaw, pitch, triangles, colors)
 

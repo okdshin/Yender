@@ -2,10 +2,22 @@ import copy
 import numpy as np
 
 from yender.renderer import raytrace
-from yender.block import Block, block_to_triangles
+from yender.block import Block
 from yender.map import Map
 
 def map_to_block_ob(map_, pos, direction):
+    '''Make block observations from map
+    TODO image
+
+    Args:
+        map_ (Map): target map
+        pos (tuple of two ints): agent position
+        direction (tuple of two ints): agent direction
+
+    Returns:
+        list of int: block id list
+    '''
+    assert isinstance(map_, Map)
     look_dict = {}
     look_dict[(-1, 0)] = [
         np.asarray([-2,-1]), np.asarray([-2, 0]), np.asarray([-2, 1]),
@@ -35,6 +47,18 @@ def map_to_block_ob(map_, pos, direction):
     return blocks
 
 def map_to_scene_image(size, map_, pos, yaw, pitch=-30):
+    '''make scene image from map
+
+    Args:
+        size (tuple of two ints): result image size
+        map_ (Map): target map
+        pos (tuple of two ints): camera position
+        yaw (float): camera yaw
+        pitch (float): camera pitch
+
+    Returns:
+        numpy.ndarray: scene image
+    '''
     block_triangles = []
     block_colors = []
     for y in range(map_.size[0]):
@@ -66,10 +90,27 @@ def map_to_scene_image(size, map_, pos, yaw, pitch=-30):
 
     #block_triangles = np.concatenate(block_triangles)
     #print(block_triangles.shape)
-    print(pos)
+    #print(pos)
     image = raytrace(size, [pos[1]+0.5,pos[0]+0.5,0.85],
             20, yaw, pitch, block_triangles, block_colors)
     return np.asarray(image).astype(np.uint8)
+
+def block_to_triangles(block, pos):
+    '''Make triangles of a block (i.e. box or tile with position)
+
+    Args:
+        block (Block): block to be converted
+        pos (list of three floats): block position
+
+    Returns:
+        tuple: tuple of triangles and colors
+    '''
+    assert isinstance(block, Block)
+    if block.block_type == "block":
+        triangles, colors = box_triangles(block.color)
+    elif block.block_type == "tile":
+        triangles, colors = tile_triangles(block.color)
+    return triangles+(pos[0], pos[1], 0), colors
 
 def map_to_top_view_image(size, map_):
     block_triangles = []
@@ -116,10 +157,19 @@ def print_block_ob(ob):
             print("^", end="")
         print(ob[i], end="")
 
-def block_ob_to_hot_vectors(ob, block_type_num):
+def block_ob_to_hot_vectors(block_ob, block_type_num):
+    '''make hot vector list from block observations
+
+    Args:
+        block_ob (list of Block): target block observations
+        block_type_num (int): the number of block types
+
+    Returns:
+        numpy.ndarray: hot vector list
+    '''
     hot_vectors = np.zeros((3*3-1, block_type_num), dtype=np.float32)
-    for i in range(len(ob)):
-        hot_vectors[i][ob[i]] = 1.0
+    for i in range(len(block_ob)):
+        hot_vectors[i][block_ob[i]] = 1.0
     return hot_vectors
 
 class RogueEnv:
