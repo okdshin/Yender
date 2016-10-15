@@ -24,27 +24,27 @@ def map_to_block_ob(map_, pos, direction, block_id_dict, default_block):
     look_dict[(-1, 0)] = [
         np.asarray([-2,-1]), np.asarray([-2, 0]), np.asarray([-2, 1]),
         np.asarray([-1,-1]), np.asarray([-1, 0]), np.asarray([-1, 1]),
-        np.asarray([ 0,-1]), np.asarray([ 0, 1]),
+        np.asarray([ 0,-1]), np.asarray([ 0, 0]), np.asarray([ 0, 1]),
     ]
     look_dict[(0, -1)] = [
         np.asarray([1, -2]), np.asarray([0, -2]), np.asarray([-1, -2]),
         np.asarray([1, -1]), np.asarray([0, -1]), np.asarray([-1, -1]),
-        np.asarray([1,  0]), np.asarray([-1, 0]),
+        np.asarray([1,  0]), np.asarray([0,  0]), np.asarray([-1, 0]),
     ]
     look_dict[(1, 0)] = [
         np.asarray([2,  1]), np.asarray([2,  0]), np.asarray([2, -1]),
         np.asarray([1,  1]), np.asarray([1,  0]), np.asarray([1, -1]),
-        np.asarray([0,  1]), np.asarray([0, -1]),
+        np.asarray([0,  1]), np.asarray([0,  0]), np.asarray([0, -1]),
     ]
     look_dict[(0, 1)] = [
         np.asarray([-1, 2]), np.asarray([0, 2]), np.asarray([1, 2]),
         np.asarray([-1, 1]), np.asarray([0, 1]), np.asarray([1, 1]),
-        np.asarray([-1, 0]), np.asarray([1, 0]),
+        np.asarray([-1, 0]), np.asarray([0, 0]), np.asarray([1, 0]),
     ]
 
     blocks = []
     for look in look_dict[tuple(direction)]:
-        block_id = map_.get_block(look+pos).block_id
+        block_id = block_id_dict[map_.safe_get_block(look+pos, default_block).name]
         blocks.append(block_id)
     return blocks
 
@@ -169,7 +169,7 @@ def block_ob_to_hot_vectors(block_ob, block_type_num):
     Returns:
         numpy.ndarray: hot vector list
     '''
-    hot_vectors = np.zeros((3*3-1, block_type_num), dtype=np.float32)
+    hot_vectors = np.zeros((3*3, block_type_num), dtype=np.float32)
     for i in range(len(block_ob)):
         hot_vectors[i][block_ob[i]] = 1.0
     return hot_vectors
