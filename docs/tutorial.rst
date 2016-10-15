@@ -206,10 +206,13 @@ Let's run random agent in our I-Maze!
     def main():
         env = I_MazeEnv()
         for episode in range(max_episode):
-            print(episode)
             ob = env.reset()
             for t in range(max_step):
+                os.system("clear")
+                print("episode", episode)
+                print("step", t)
                 env.render()
+                print("ob", ob)
                 time.sleep(0.1)
 
                 action = random.choice(range(4)) # random agent

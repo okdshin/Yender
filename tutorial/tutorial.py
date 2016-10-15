@@ -79,7 +79,6 @@ class I_MazeEnv:
         return ob, reward, done, self.rogue_env
 
     def render(self):
-        os.system("clear")
         self.rogue_env.print_map()
         print("total_reward", self.total_reward)
 
@@ -91,9 +90,10 @@ def main():
     for episode in range(max_episode):
         ob = env.reset()
         for t in range(max_step):
-            env.render()
+            os.system("clear")
             print("episode", episode)
             print("step", t)
+            env.render()
             print("ob", ob)
             time.sleep(0.1)
 
