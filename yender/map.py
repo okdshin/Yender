@@ -60,8 +60,8 @@ class Map:
     def print(self):
         for y in range(self.size[0]):
             for x in range(self.size[1]):
-                indicator = self.get_block((y, x)).indicator
-                print(indicator, end="")
+                char = self.get_block((y, x)).char
+                print(char, end="")
             print()
 
 
@@ -70,7 +70,7 @@ def load_map(block_set, block_list):
     #TODO
 
     Args:
-        block_set (dict of (indicator, Block)): block set included in map
+        block_set (dict of (str, Block)): block set included in map
         block_list (list of str): source of map
 
     Returns:
@@ -82,7 +82,7 @@ def load_map(block_set, block_list):
         for x, block in enumerate(line):
             if block in [str(i) for i in range(10)]:
                 positions[block] = (y, x)
-                data.append(Block())
+                data.append(Block(char="?"))
             else:
                 data.append(copy.copy(block_set[block]))
     size = (len(block_list), len(block_list[0]))

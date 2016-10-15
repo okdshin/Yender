@@ -3,13 +3,15 @@ class Block:
     """Block class
     """
     def __init__(self,
-            block_type="block", color=(100,0,100), indicator="?",
-            name="unknown", movable=False):
+            char,
+            block_type="block", color=(100,0,100),
+            name="unknown", movable=True, visible=True):
         """Constructor
         """
         self.block_type = block_type
         self.color = color
-        self.indicator = indicator
+        self.char = char
         self.name = name
         self.movable = movable
+        self.visible = visible
 

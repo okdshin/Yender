@@ -66,7 +66,7 @@ def map_to_scene_image(size, map_, pos, yaw, pitch=-30):
     for y in range(map_.size[0]):
         for x in range(map_.size[1]):
             block = map_.get_block((y, x))
-            if block.name != "air":
+            if block.visible:
                 triangles, colors = block_to_triangles(block, (x, y))
                 block_triangles.extend([tri.tolist() for tri in triangles])
                 block_colors.extend([list(c) for c in colors])
@@ -189,14 +189,14 @@ class RogueEnv:
     def print_map(self):
         map_ = copy.deepcopy(self.map_)
         if self.agent_direction[0] == -1 and self.agent_direction[1] == 0:
-            indicator = "^"
+            agent_char = "^"
         elif self.agent_direction[0] == 0 and self.agent_direction[1] == -1:
-            indicator = "<"
+            agent_char = "<"
         elif self.agent_direction[0] == 1 and self.agent_direction[1] == 0:
-            indicator = "v"
+            agent_char = "v"
         elif self.agent_direction[0] == 0 and self.agent_direction[1] == 1:
-            indicator = ">"
-        map_.set_block(self.agent_position, Block(indicator=indicator, name="agent", movable=False))
+            agent_char = ">"
+        map_.set_block(self.agent_position, Block(char=agent_char, name="agent", movable=False, visible=False))
         map_.print()
 
     def step(self, action):
