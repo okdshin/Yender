@@ -1,5 +1,5 @@
 Quick Tutorial
-========
+==============
 
 Make your own environment to train your agent
 ---------------------------------------------
@@ -47,53 +47,49 @@ Firstly, we need to define a block_set that enumerates the blocks included in I-
 
 .. code-block:: python
 
-    block_set = {}
-    block_set["."] = Block(block_id=0, indicator=".", name="air", movable=True)
-    block_set["#"] = Block(block_id=1, indicator="#", name="stone", color=(127, 127, 127), movable=False)
-    block_set["R"] = Block(block_id=2, indicator="R", name="red_tile", block_type="tile", color=(255, 0, 0), movable=True)
-    block_set["B"] = Block(block_id=3, indicator="B", name="blue_tile", block_type="tile", color=(0, 0, 255), movable=True)
-    block_set["Y"] = Block(block_id=4, indicator="Y", name="yellow_tile", block_type="tile", color=(255, 255, 0), movable=True)
-    block_set["G"] = Block(block_id=5, indicator="G", name="green_tile", block_type="tile", color=(0, 255, 0), movable=True)
+    block_set = collections.OrderedDict()
+    block_set["."] = yender.Block(indicator=".", name="air", movable=True)
+    block_set["#"] = yender.Block(indicator="#", name="stone", color=(127, 127, 127), movable=False)
+    block_set["R"] = yender.Block(indicator="R", name="red_tile", block_type="tile", color=(255, 0, 0), movable=True)
+    block_set["B"] = yender.Block(indicator="B", name="blue_tile", block_type="tile", color=(0, 0, 255), movable=True)
+    block_set["Y"] = yender.Block(indicator="Y", name="yellow_tile", block_type="tile", color=(255, 255, 0), movable=True)
+    block_set["G"] = yender.Block(indicator="G", name="green_tile", block_type="tile", color=(0, 255, 0), movable=True)
+
+In addition, we define block_id_dict for the sake of the future ;)
+
+.. code-block:: python
+
+    block_id_dict = {}
+    for i, block in enumerate(block_set.values()):
+        block_id_dict[block.name] = i
 
 Next, we need to make I-Maze map. We can make it with a source code.
 
 .. code-block:: python
 
-    map_source = [
-        "#######",
-        "#2...3#",
-        "###.###",
-        "###.###",
-        "###.###",
-        "#..0.1#",
-        "#######",
-    ]
-    map_, place_holders = yender.load_map(block_set, map_source)
-
-    # place goal tiles and an indicator tile
-    start_pos = place_holders["0"]
-    indicator_pos = place_holders["1"]
-    blue_pos = place_holders["2"]
-    red_pos = place_holders["3"]
-
-    indicator_color = random.choice(("G", "Y"))
-    map_.set_block(start_pos, block_set["."])
-    map_.set_block(indicator_pos, block_set[indicator_color])
-    map_.set_block(blue_pos, block_set["B"])
-    map_.set_block(red_pos, block_set["R"])
-
-Join them into one helper function: make_i_maze_map.
-
-.. code-block:: python
-
     def make_i_maze_map():
-        block_set = {}
-        block_set["."] = Block(block_id=0, indicator=".", name="air", movable=True)
-        ...
-
         map_source = [
             "#######",
-        ...
+            "#2...3#",
+            "###.###",
+            "###.###",
+            "###.###",
+            "#..0.1#",
+            "#######",
+        ]
+        map_, place_holders = yender.load_map(block_set, map_source)
+
+        # place goal tiles and an indicator tile
+        start_pos = place_holders["0"]
+        indicator_pos = place_holders["1"]
+        blue_pos = place_holders["2"]
+        red_pos = place_holders["3"]
+
+        indicator_color = random.choice(("G", "Y"))
+        map_.set_block(start_pos, block_set["."])
+        map_.set_block(indicator_pos, block_set[indicator_color])
+        map_.set_block(blue_pos, block_set["B"])
+        map_.set_block(red_pos, block_set["R"])
 
         return map_, indicator_color, start_pos, blue_pos, red_pos
 
@@ -115,15 +111,49 @@ RogueEnv manages agent states (position and direction) so compose it.
         def __init__(self):
             self.rogue_env = yender.RogueEnv()
 
+It's time to define the contents of an agent's observation.
+In this tutorial, the observation is one-hot-vectors of block type that an agent see.
+
+:func:`~yender.rogue_env.map_to_block_ob` gives block list containing 3x3 blocks. The indices are below.
+
++-+-+-+
+|0|1|2|
++-+-+-+
+|3|4|5|
++-+-+-+
+|6|7|8|
++-+-+-+
+
+Where an agent is at 7 position (not 4) directing the upper.
+
+.. code-block:: python
+
+        def get_ob(self):
+            block_ob = yender.map_to_block_ob(self.map_,
+                direction=self.rogue_env.agent_direction,
+                pos=self.rogue_env.agent_position,
+                block_id_dict=block_id_dict,
+                default_block=block_set["#"]) # default block is for the out of area
+
+            # convert block_ob to one-hot-vectors
+            ob = yender.block_ob_to_hot_vectors(block_ob, len(block_id_dict))
+            return ob
+
+.. tip::
+
+    :func:`~yender.rogue_env.map_to_scene_image` gives scene image from a map. It doesn't use OpenGL.
+
 For every episode, we want to reset environment, so let's add reset method.
 
 .. code-block:: python
 
         def reset(self):
             self.total_reward = 0.0
-            map_, self.indicator, start_pos, self.blue_pos, self.red_pos = make_i_maze_map()
+            self.map_, self.indicator, start_pos, self.blue_pos, self.red_pos = make_i_maze_map()
             start_direction = random.choice(([1, 0], [-1, 0], [0, 1], [0, -1]))
-            self.rogue_env.reset(map_, start_direction, start_pos)
+            self.rogue_env.reset(self.map_, np.asarray(start_direction), np.asarray(start_pos))
+            ob = self.get_ob()
+            return ob
 
 For every step, we want to have our agent do some action in the environment, so let's add step method.
 The step method should do three things:
@@ -140,22 +170,21 @@ The step method should do three things:
             # reward and done check
             if self.rogue_env.map_.get_block(self.rogue_env.agent_position).name == "red_tile":
                 done = True
-                reward = 1.0 if self.indicator.name == "yellow_tile" else -1.0
+                reward = 1.0 if self.indicator == "Y" else -1.0
             elif self.rogue_env.map_.get_block(self.rogue_env.agent_position).name == "blue_tile":
                 done = True
-                reward = 1.0 if self.indicator.name == "green_tile" else -1.0
+                reward = 1.0 if self.indicator == "G" else -1.0
             else:
                 done = False
                 reward = -0.04
 
             # get observation
-            block_ob = yender.map_to_block_ob(map_, direction=env.agent_direction, pos=env.agent_position)
-            ob = yender.block_ob_to_hot_vectors(block_ob)
+            ob = self.get_ob()
 
             self.total_reward += reward
             return ob, reward, done, self.rogue_env
 
-That's all... Oops! Don't forget render function.
+Then, don't forget render function.
 
 .. code-block:: python
 
@@ -176,7 +205,8 @@ Let's run random agent in our I-Maze!
 
     def main():
         env = I_MazeEnv()
-        for episode in range(max_eisode):
+        for episode in range(max_episode):
+            print(episode)
             ob = env.reset()
             for t in range(max_step):
                 env.render()
@@ -188,9 +218,10 @@ Let's run random agent in our I-Maze!
                 if done:
                     env.render()
                     print("Episode finished after {} timesteps".format(t+1))
-                    time.sleep(2)
+                    time.sleep(5)
                     break
 
 The full code is `tutorial/tutorial.py <https://github.com/okdshin/Yender/blob/master/tutorial/tutorial.py>`_.
 
+Now you can make your own environment.
 If you need any help about Yender, ask us via github issues or email.
