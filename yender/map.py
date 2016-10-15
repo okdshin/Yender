@@ -9,9 +9,9 @@ class Map:
         data (list of Block): block list
     '''
 
-    def __init__(self, size=(3, 3), data=[Block() for _ in range(3*3)]):
+    def __init__(self, size, block_list):
         self.size = size
-        self.data = data
+        self.data = block_list
 
     def _index(self, pos):
         # x + y*w
