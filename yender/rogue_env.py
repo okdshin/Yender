@@ -5,7 +5,7 @@ from yender.renderer import raytrace
 from yender.block import Block
 from yender.map import Map
 
-def map_to_block_ob(map_, pos, direction):
+def map_to_block_ob(map_, pos, direction, block_id_dict, default_block):
     '''Make block observations from map
     TODO image
 
@@ -13,6 +13,8 @@ def map_to_block_ob(map_, pos, direction):
         map_ (Map): target map
         pos (tuple of two ints): agent position
         direction (tuple of two ints): agent direction
+        block_id_dict (dict of str key and int value): dict of block name key and block id value
+        default_block (Block): default block out of area
 
     Returns:
         list of int: block id list
@@ -194,8 +196,7 @@ class RogueEnv:
             indicator = "v"
         elif self.agent_direction[0] == 0 and self.agent_direction[1] == 1:
             indicator = ">"
-        map_.set_block(self.agent_position,
-                Block(block_id=-1, indicator=indicator, name="agent", movable=False))
+        map_.set_block(self.agent_position, Block(indicator=indicator, name="agent", movable=False))
         map_.print()
 
     def step(self, action):
