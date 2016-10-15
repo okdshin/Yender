@@ -89,10 +89,12 @@ max_step = 50
 def main():
     env = I_MazeEnv()
     for episode in range(max_episode):
-        print(episode)
         ob = env.reset()
         for t in range(max_step):
             env.render()
+            print("episode", episode)
+            print("step", t)
+            print("ob", ob)
             time.sleep(0.1)
 
             action = random.choice(range(4)) # random agent
