@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>yender package &#8212; Yender 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Yender 0.1 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Yender 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="yender-package">
+<h1>yender package<a class="headerlink" href="#yender-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-yender.block">
+<span id="yender-block-module"></span><h2>yender.block module<a class="headerlink" href="#module-yender.block" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="yender.block.Block">
+<em class="property">class </em><code class="descclassname">yender.block.</code><code class="descname">Block</code><span class="sig-paren">(</span><em>char</em>, <em>block_type='block'</em>, <em>color=(100</em>, <em>0</em>, <em>100)</em>, <em>name='unknown'</em>, <em>movable=True</em>, <em>visible=True</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.block.Block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Block class</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-yender.map">
+<span id="yender-map-module"></span><h2>yender.map module<a class="headerlink" href="#module-yender.map" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="yender.map.Map">
+<em class="property">class </em><code class="descclassname">yender.map.</code><code class="descname">Map</code><span class="sig-paren">(</span><em>size</em>, <em>block_list</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.map.Map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Map class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>size</strong> (<em>tuple of two int</em>) &#8211; size</li>
+<li><strong>data</strong> (<em>list of Block</em>) &#8211; block list</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="yender.map.Map.get_block">
+<code class="descname">get_block</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.map.Map.get_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pos</strong> (<em>tuple of two ints</em>) &#8211; target block position</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">corresponding block</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#yender.block.Block" title="yender.block.Block">Block</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="yender.map.Map.print">
+<code class="descname">print</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#yender.map.Map.print" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="yender.map.Map.safe_get_block">
+<code class="descname">safe_get_block</code><span class="sig-paren">(</span><em>pos</em>, <em>default_block</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.map.Map.safe_get_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter (safe version)</p>
+<p>This function returns default_block if pos is out of area.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pos</strong> (<em>tuple of two ints</em>) &#8211; target block position</li>
+<li><strong>default_block</strong> (<a class="reference internal" href="#yender.block.Block" title="yender.block.Block"><em>Block</em></a>) &#8211; default block when pos is out of area</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">corresponding block or default_block</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#yender.block.Block" title="yender.block.Block">Block</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="yender.map.Map.set_block">
+<code class="descname">set_block</code><span class="sig-paren">(</span><em>pos</em>, <em>block</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.map.Map.set_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pos</strong> (<em>tuple of two ints</em>) &#8211; target block position</li>
+<li><strong>block</strong> (<em>Block</em>) &#8211; block to be set</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="yender.map.load_map">
+<code class="descclassname">yender.map.</code><code class="descname">load_map</code><span class="sig-paren">(</span><em>block_set</em>, <em>block_list</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.map.load_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>load map from source
+#TODO</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>block_set</strong> (<em>dict of (str, Block</em>) &#8211; block set included in map</li>
+<li><strong>block_list</strong> (<em>list of str</em>) &#8211; source of map</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">loaded map and annotated positions</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple of Map and positions</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-yender.renderer">
+<span id="yender-renderer-module"></span><h2>yender.renderer module<a class="headerlink" href="#module-yender.renderer" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="yender.renderer.box_triangles">
+<code class="descclassname">yender.renderer.</code><code class="descname">box_triangles</code><span class="sig-paren">(</span><em>color</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.renderer.box_triangles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make triangles of a box</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> (<em>tuple of three ints</em>) &#8211; triangle color</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple of triangles and colors</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="yender.renderer.raytrace">
+<code class="descclassname">yender.renderer.</code><code class="descname">raytrace</code><span class="sig-paren">(</span><em>image_size</em>, <em>origin</em>, <em>f</em>, <em>yaw</em>, <em>pitch</em>, <em>triangles</em>, <em>colors</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.renderer.raytrace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render image with raytracing</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>image_size</strong> (<em>Tuple of two ints</em>) &#8211; (width, height)</li>
+<li><strong>origin</strong> (<em>Tuple of three ints</em>) &#8211; the start point (x, y, z) of rays</li>
+<li><strong>f</strong> (<em>float</em>) &#8211; focal length</li>
+<li><strong>yaw</strong> (<em>float</em>) &#8211; camera yaw (angle)</li>
+<li><strong>pitch</strong> (<em>float</em>) &#8211; camera pitch (angle)</li>
+<li><strong>triangles</strong> &#8211; triangles[i] corresponding to colors[i]</li>
+<li><strong>colors</strong> &#8211; colors[i] corresponding to triangles[i]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">rendered image (channel, x, y)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of list of list of int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="yender.renderer.tile_triangles">
+<code class="descclassname">yender.renderer.</code><code class="descname">tile_triangles</code><span class="sig-paren">(</span><em>color</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.renderer.tile_triangles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make triangles of a tile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>color</strong> (<em>tuple of three ints</em>) &#8211; triangle color</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple of triangles and colors</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-yender.rogue_env">
+<span id="yender-rogue-env-module"></span><h2>yender.rogue_env module<a class="headerlink" href="#module-yender.rogue_env" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="yender.rogue_env.RogueEnv">
+<em class="property">class </em><code class="descclassname">yender.rogue_env.</code><code class="descname">RogueEnv</code><span class="sig-paren">(</span><em>action_set=[('move', 1), ('move', -1), ('turn', 1), ('turn', -1)]</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.RogueEnv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="yender.rogue_env.RogueEnv.print_map">
+<code class="descname">print_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.RogueEnv.print_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="yender.rogue_env.RogueEnv.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><em>map_</em>, <em>start_direction</em>, <em>start_position</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.RogueEnv.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="yender.rogue_env.RogueEnv.step">
+<code class="descname">step</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.RogueEnv.step" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="yender.rogue_env.block_ob_to_hot_vectors">
+<code class="descclassname">yender.rogue_env.</code><code class="descname">block_ob_to_hot_vectors</code><span class="sig-paren">(</span><em>block_ob</em>, <em>block_type_num</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.block_ob_to_hot_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>make hot vector list from block observations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>block_ob</strong> (<em>list of Block</em>) &#8211; target block observations</li>
+<li><strong>block_type_num</strong> (<em>int</em>) &#8211; the number of block types</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">hot vector list</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="yender.rogue_env.block_to_triangles">
+<code class="descclassname">yender.rogue_env.</code><code class="descname">block_to_triangles</code><span class="sig-paren">(</span><em>block</em>, <em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.block_to_triangles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make triangles of a block (i.e. box or tile with position)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>block</strong> (<a class="reference internal" href="#yender.block.Block" title="yender.block.Block"><em>Block</em></a>) &#8211; block to be converted</li>
+<li><strong>pos</strong> (<em>list of three floats</em>) &#8211; block position</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">tuple of triangles and colors</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="yender.rogue_env.map_to_block_ob">
+<code class="descclassname">yender.rogue_env.</code><code class="descname">map_to_block_ob</code><span class="sig-paren">(</span><em>map_</em>, <em>pos</em>, <em>direction</em>, <em>block_id_dict</em>, <em>default_block</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.map_to_block_ob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make block observations from map
+TODO image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>map</strong> (<a class="reference internal" href="#yender.map.Map" title="yender.map.Map"><em>Map</em></a>) &#8211; target map</li>
+<li><strong>pos</strong> (<em>tuple of two ints</em>) &#8211; agent position</li>
+<li><strong>direction</strong> (<em>tuple of two ints</em>) &#8211; agent direction</li>
+<li><strong>block_id_dict</strong> (<em>dict of str key and int value</em>) &#8211; dict of block name key and block id value</li>
+<li><strong>default_block</strong> (<a class="reference internal" href="#yender.block.Block" title="yender.block.Block"><em>Block</em></a>) &#8211; default block out of area</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">block id list</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="yender.rogue_env.map_to_scene_image">
+<code class="descclassname">yender.rogue_env.</code><code class="descname">map_to_scene_image</code><span class="sig-paren">(</span><em>size</em>, <em>map_</em>, <em>pos</em>, <em>yaw</em>, <em>pitch=-30</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.map_to_scene_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>make scene image from map</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>size</strong> (<em>tuple of two ints</em>) &#8211; result image size</li>
+<li><strong>map</strong> (<a class="reference internal" href="#yender.map.Map" title="yender.map.Map"><em>Map</em></a>) &#8211; target map</li>
+<li><strong>pos</strong> (<em>tuple of two ints</em>) &#8211; camera position</li>
+<li><strong>yaw</strong> (<em>float</em>) &#8211; camera yaw</li>
+<li><strong>pitch</strong> (<em>float</em>) &#8211; camera pitch</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">scene image</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="yender.rogue_env.map_to_top_view_image">
+<code class="descclassname">yender.rogue_env.</code><code class="descname">map_to_top_view_image</code><span class="sig-paren">(</span><em>size</em>, <em>map_</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.map_to_top_view_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="yender.rogue_env.print_block_ob">
+<code class="descclassname">yender.rogue_env.</code><code class="descname">print_block_ob</code><span class="sig-paren">(</span><em>ob</em><span class="sig-paren">)</span><a class="headerlink" href="#yender.rogue_env.print_block_ob" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-yender">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-yender" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Quick Tutorial</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/yender.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Yender 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, okdshin.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>
