@@ -46,7 +46,11 @@ class I_MazeEnv:
         self.rogue_env = yender.RogueEnv()
 
     def get_ob(self):
-        block_ob = yender.map_to_block_ob(self.map_, direction=self.rogue_env.agent_direction, pos=self.rogue_env.agent_position, block_id_dict=block_id_dict, default_block=block_set["#"])
+        block_ob = yender.map_to_block_ob(self.map_,
+                direction=self.rogue_env.agent_direction,
+                pos=self.rogue_env.agent_position,
+                block_id_dict=block_id_dict,
+                default_block=block_set["#"])
         ob = yender.block_ob_to_hot_vectors(block_ob, len(block_id_dict))
         return ob
 
@@ -54,7 +58,7 @@ class I_MazeEnv:
         self.total_reward = 0.0
         self.map_, self.indicator, start_pos, self.blue_pos, self.red_pos = make_i_maze_map()
         start_direction = random.choice(([1, 0], [-1, 0], [0, 1], [0, -1]))
-        self.rogue_env.reset(self.map_, np.asarray(start_direction), np.asarray(start_pos))
+        self.rogue_env.reset(self.map_, start_direction, start_pos)
         ob = self.get_ob()
         return ob
 
@@ -80,30 +84,31 @@ class I_MazeEnv:
 
     def render(self):
         self.rogue_env.print_map()
-        print("total_reward", self.total_reward)
+        print("total_reward {0:0.2f}".format(self.total_reward))
 
 max_episode = 20
 max_step = 50
+
+def render(env, episode, t, ob, sleep_time, message=""):
+    os.system("clear")
+    print("episode", episode)
+    print("step", t)
+    env.render()
+    print("ob", ob)
+    time.sleep(sleep_time)
+    print(message)
 
 def main():
     env = I_MazeEnv()
     for episode in range(max_episode):
         ob = env.reset()
         for t in range(max_step):
-            os.system("clear")
-            print("episode", episode)
-            print("step", t)
-            env.render()
-            print("ob", ob)
-            time.sleep(0.1)
-
+            render(env, episode, t, ob, 0.1)
             action = random.choice(range(4)) # random agent
             ob, reward, done, info = env.step(action)
 
             if done:
-                env.render()
-                print("Episode finished after {} timesteps".format(t+1))
-                time.sleep(5)
+                render(env, episode, t, ob, 10, "Episode finished after {} timesteps".format(t+1))
                 break
 
 if __name__ == "__main__":
