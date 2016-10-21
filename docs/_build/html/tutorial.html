@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quick Tutorial &#8212; Yender 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Yender 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Install Guide" href="install.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Install Guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Yender 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="quick-tutorial">
+<h1>Quick Tutorial<a class="headerlink" href="#quick-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="make-your-own-environment-to-train-your-agent">
+<h2>Make your own environment to train your agent<a class="headerlink" href="#make-your-own-environment-to-train-your-agent" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial, we instruct how to make your own environment with the specific example: I-Maze.</p>
+</div>
+<div class="section" id="work-out-details-what-is-i-maze">
+<h2>Work out details: What is I-Maze?<a class="headerlink" href="#work-out-details-what-is-i-maze" title="Permalink to this headline">¶</a></h2>
+<p>I-Maze is a spatial memory task inspired by <a class="reference external" href="https://en.wikipedia.org/wiki/T-maze">T-Maze</a> introduced <a class="reference external" href="https://arxiv.org/abs/1605.09128">Control of Memory, Active Perception, and Action in Minecraft [Junhyuk 2016]</a>.</p>
+<p>In I-Maze, an agent must reach the correct goal depending on the color of the indicator tile.</p>
+<p>The detail infomation is below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>#</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+</tr>
+<tr class="row-even"><td>#</td>
+<td>2</td>
+<td>.</td>
+<td>.</td>
+<td>.</td>
+<td>3</td>
+<td>#</td>
+</tr>
+<tr class="row-odd"><td>#</td>
+<td>#</td>
+<td>#</td>
+<td>.</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+</tr>
+<tr class="row-even"><td>#</td>
+<td>#</td>
+<td>#</td>
+<td>.</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+</tr>
+<tr class="row-odd"><td>#</td>
+<td>#</td>
+<td>#</td>
+<td>.</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+</tr>
+<tr class="row-even"><td>#</td>
+<td>.</td>
+<td>.</td>
+<td>0</td>
+<td>.</td>
+<td>1</td>
+<td>#</td>
+</tr>
+<tr class="row-odd"><td>#</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+<td>#</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>An agent starts at the point 0 directed randomly.</li>
+<li>For every step, an agent do one of four actions: go forward, go backward, turn left and turn right.</li>
+<li>A tile (called &#8220;indicator tile&#8221;) is placed at the point 1 and painted yellow or green for every episode.</li>
+<li>Two tiles are placed at the point 2 and 3. One tile is painted red and the other is painted blue.</li>
+<li>Reaching the red tile, an agent get +1.0 reward if the indicator tile is yellow else -1.0.</li>
+<li>Reaching the blue tile, an agent get +1.0 reward if the indicator tile is green else -1.0.</li>
+<li>Agent get -0.04 reward every step.</li>
+<li>The time limit is 50 steps.</li>
+</ul>
+</div>
+<div class="section" id="make-i-maze-environment">
+<h2>Make I-Maze environment<a class="headerlink" href="#make-i-maze-environment" title="Permalink to this headline">¶</a></h2>
+<p>Firstly, we need to define a block_set that enumerates the blocks included in I-Maze.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">block_set</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+<span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;.&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">char</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;air&quot;</span><span class="p">,</span> <span class="n">visible</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;#&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">char</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;stone&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">127</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">127</span><span class="p">),</span> <span class="n">movable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">char</span><span class="o">=</span><span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;red_tile&quot;</span><span class="p">,</span> <span class="n">block_type</span><span class="o">=</span><span class="s2">&quot;tile&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">char</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;blue_tile&quot;</span><span class="p">,</span> <span class="n">block_type</span><span class="o">=</span><span class="s2">&quot;tile&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+<span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">char</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;yellow_tile&quot;</span><span class="p">,</span> <span class="n">block_type</span><span class="o">=</span><span class="s2">&quot;tile&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">char</span><span class="o">=</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;green_tile&quot;</span><span class="p">,</span> <span class="n">block_type</span><span class="o">=</span><span class="s2">&quot;tile&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In addition, we define block_id_dict for the sake of the future ;)</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">block_id_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">block</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">block_set</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+    <span class="n">block_id_dict</span><span class="p">[</span><span class="n">block</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+</pre></div>
+</div>
+<p>Next, we need to make I-Maze map. We can make it with a source code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_i_maze_map</span><span class="p">():</span>
+    <span class="n">map_source</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;#######&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#2...3#&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;###.###&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;###.###&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;###.###&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#..0.1#&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;#######&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">map_</span><span class="p">,</span> <span class="n">place_holders</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">load_map</span><span class="p">(</span><span class="n">block_set</span><span class="p">,</span> <span class="n">map_source</span><span class="p">)</span>
+
+    <span class="c1"># place goal tiles and an indicator tile</span>
+    <span class="n">start_pos</span> <span class="o">=</span> <span class="n">place_holders</span><span class="p">[</span><span class="s2">&quot;0&quot;</span><span class="p">]</span>
+    <span class="n">indicator_pos</span> <span class="o">=</span> <span class="n">place_holders</span><span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">]</span>
+    <span class="n">blue_pos</span> <span class="o">=</span> <span class="n">place_holders</span><span class="p">[</span><span class="s2">&quot;2&quot;</span><span class="p">]</span>
+    <span class="n">red_pos</span> <span class="o">=</span> <span class="n">place_holders</span><span class="p">[</span><span class="s2">&quot;3&quot;</span><span class="p">]</span>
+
+    <span class="n">indicator_color</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">((</span><span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">))</span>
+    <span class="n">map_</span><span class="o">.</span><span class="n">set_block</span><span class="p">(</span><span class="n">start_pos</span><span class="p">,</span> <span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;.&quot;</span><span class="p">])</span>
+    <span class="n">map_</span><span class="o">.</span><span class="n">set_block</span><span class="p">(</span><span class="n">indicator_pos</span><span class="p">,</span> <span class="n">block_set</span><span class="p">[</span><span class="n">indicator_color</span><span class="p">])</span>
+    <span class="n">map_</span><span class="o">.</span><span class="n">set_block</span><span class="p">(</span><span class="n">blue_pos</span><span class="p">,</span> <span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">])</span>
+    <span class="n">map_</span><span class="o">.</span><span class="n">set_block</span><span class="p">(</span><span class="n">red_pos</span><span class="p">,</span> <span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">map_</span><span class="p">,</span> <span class="n">indicator_color</span><span class="p">,</span> <span class="n">start_pos</span><span class="p">,</span> <span class="n">blue_pos</span><span class="p">,</span> <span class="n">red_pos</span>
+</pre></div>
+</div>
+<p>Now, let&#8217;s make I_MazeEnv class.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">I_MazeEnv</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>RogueEnv manages agent states (position and direction) so compose it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yender</span>
+
+<span class="k">class</span> <span class="nc">I_MazeEnv</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">RogueEnv</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>It&#8217;s time to define the contents of an agent&#8217;s observation.
+In this tutorial, the observation is one-hot-vectors of block type that an agent see.</p>
+<p><a class="reference internal" href="yender.html#yender.rogue_env.map_to_block_ob" title="yender.rogue_env.map_to_block_ob"><code class="xref py py-func docutils literal"><span class="pre">map_to_block_ob()</span></code></a> gives block list containing 3x3 blocks. The indices are below.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>0</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>7</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>Where an agent is at 7 position (not 4) directing the upper.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_ob</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">block_ob</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">map_to_block_ob</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map_</span><span class="p">,</span>
+        <span class="n">direction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span><span class="o">.</span><span class="n">agent_direction</span><span class="p">,</span>
+        <span class="n">pos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span><span class="o">.</span><span class="n">agent_position</span><span class="p">,</span>
+        <span class="n">block_id_dict</span><span class="o">=</span><span class="n">block_id_dict</span><span class="p">,</span>
+        <span class="n">default_block</span><span class="o">=</span><span class="n">block_set</span><span class="p">[</span><span class="s2">&quot;#&quot;</span><span class="p">])</span> <span class="c1"># default block is for the out of area</span>
+
+    <span class="c1"># convert block_ob to one-hot-vectors</span>
+    <span class="n">ob</span> <span class="o">=</span> <span class="n">yender</span><span class="o">.</span><span class="n">block_ob_to_hot_vectors</span><span class="p">(</span><span class="n">block_ob</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">block_id_dict</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ob</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last"><a class="reference internal" href="yender.html#yender.rogue_env.map_to_scene_image" title="yender.rogue_env.map_to_scene_image"><code class="xref py py-func docutils literal"><span class="pre">map_to_scene_image()</span></code></a> gives scene image from a map. It doesn&#8217;t use OpenGL.</p>
+</div>
+<p>For every episode, we want to reset environment, so let&#8217;s add reset method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total_reward</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">map_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="n">start_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">blue_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">red_pos</span> <span class="o">=</span> <span class="n">make_i_maze_map</span><span class="p">()</span>
+    <span class="n">start_direction</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">map_</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">start_direction</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">start_pos</span><span class="p">))</span>
+    <span class="n">ob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ob</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ob</span>
+</pre></div>
+</div>
+<p>For every step, we want to have our agent do some action in the environment, so let&#8217;s add step method.
+The step method should do three things:</p>
+<ul class="simple">
+<li>Change environemnt</li>
+<li>Check reward and done</li>
+<li>Get observation</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+    <span class="c1"># reward and done check</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span><span class="o">.</span><span class="n">map_</span><span class="o">.</span><span class="n">get_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span><span class="o">.</span><span class="n">agent_position</span><span class="p">)</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;red_tile&quot;</span><span class="p">:</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">reward</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span> <span class="o">==</span> <span class="s2">&quot;Y&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="mf">1.0</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span><span class="o">.</span><span class="n">map_</span><span class="o">.</span><span class="n">get_block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span><span class="o">.</span><span class="n">agent_position</span><span class="p">)</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;blue_tile&quot;</span><span class="p">:</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">reward</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span> <span class="o">==</span> <span class="s2">&quot;G&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="mf">1.0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">reward</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.04</span>
+
+    <span class="c1"># get observation</span>
+    <span class="n">ob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_ob</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">total_reward</span> <span class="o">+=</span> <span class="n">reward</span>
+    <span class="k">return</span> <span class="n">ob</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span>
+</pre></div>
+</div>
+<p>Then, don&#8217;t forget render function.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rogue_env</span><span class="o">.</span><span class="n">print_map</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;total_reward&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_reward</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-random-agent">
+<h2>Run random agent<a class="headerlink" href="#run-random-agent" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s run random agent in our I-Maze!</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">max_episode</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">max_step</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">I_MazeEnv</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">episode</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_episode</span><span class="p">):</span>
+        <span class="n">ob</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_step</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;clear&quot;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;episode&quot;</span><span class="p">,</span> <span class="n">episode</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+            <span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;ob&quot;</span><span class="p">,</span> <span class="n">ob</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+            <span class="n">action</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span> <span class="c1"># random agent</span>
+            <span class="n">ob</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">done</span><span class="p">:</span>
+                <span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+                <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Episode finished after {} timesteps&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+                <span class="k">break</span>
+</pre></div>
+</div>
+<p>The full code is <a class="reference external" href="https://github.com/okdshin/Yender/blob/master/tutorial/tutorial.py">tutorial/tutorial.py</a>.</p>
+<p>Now you can make your own environment.
+If you need any help about Yender, ask us via github issues or email.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Tutorial</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="install.html"
+                        title="previous chapter">Install Guide</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tutorial.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="install.html" title="Install Guide"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Yender 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, okdshin.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
+    </div>
+  </body>
+</html>
