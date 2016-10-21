@@ -48,12 +48,12 @@ Firstly, we need to define a block_set that enumerates the blocks included in I-
 .. code-block:: python
 
     block_set = collections.OrderedDict()
-    block_set["."] = yender.Block(indicator=".", name="air", movable=True)
-    block_set["#"] = yender.Block(indicator="#", name="stone", color=(127, 127, 127), movable=False)
-    block_set["R"] = yender.Block(indicator="R", name="red_tile", block_type="tile", color=(255, 0, 0), movable=True)
-    block_set["B"] = yender.Block(indicator="B", name="blue_tile", block_type="tile", color=(0, 0, 255), movable=True)
-    block_set["Y"] = yender.Block(indicator="Y", name="yellow_tile", block_type="tile", color=(255, 255, 0), movable=True)
-    block_set["G"] = yender.Block(indicator="G", name="green_tile", block_type="tile", color=(0, 255, 0), movable=True)
+    block_set["."] = yender.Block(char=".", name="air", visible=False)
+    block_set["#"] = yender.Block(char="#", name="stone", color=(127, 127, 127), movable=False)
+    block_set["R"] = yender.Block(char="R", name="red_tile", block_type="tile", color=(255, 0, 0))
+    block_set["B"] = yender.Block(char="B", name="blue_tile", block_type="tile", color=(0, 0, 255))
+    block_set["Y"] = yender.Block(char="Y", name="yellow_tile", block_type="tile", color=(255, 255, 0))
+    block_set["G"] = yender.Block(char="G", name="green_tile", block_type="tile", color=(0, 255, 0))
 
 In addition, we define block_id_dict for the sake of the future ;)
 
