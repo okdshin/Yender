@@ -151,7 +151,7 @@ For every episode, we want to reset environment, so let's add reset method.
             self.total_reward = 0.0
             self.map_, self.indicator, start_pos, self.blue_pos, self.red_pos = make_i_maze_map()
             start_direction = random.choice(([1, 0], [-1, 0], [0, 1], [0, -1]))
-            self.rogue_env.reset(self.map_, np.asarray(start_direction), np.asarray(start_pos))
+            self.rogue_env.reset(self.map_, start_direction, start_pos)
             ob = self.get_ob()
             return ob
 
@@ -202,25 +202,26 @@ Let's run random agent in our I-Maze!
     max_episode = 20
     max_step = 50
 
+    def render(env, episode, t, ob, sleep_time, message=""):
+        os.system("clear")
+        print("episode", episode)
+        print("step", t)
+        env.render()
+        print("ob", ob)
+        time.sleep(sleep_time)
+        print(message)
+
     def main():
         env = I_MazeEnv()
         for episode in range(max_episode):
             ob = env.reset()
             for t in range(max_step):
-                os.system("clear")
-                print("episode", episode)
-                print("step", t)
-                env.render()
-                print("ob", ob)
-                time.sleep(0.1)
-
+                render(env, episode, t, ob, 0.1)
                 action = random.choice(range(4)) # random agent
                 ob, reward, done, info = env.step(action)
 
                 if done:
-                    env.render()
-                    print("Episode finished after {} timesteps".format(t+1))
-                    time.sleep(5)
+                    render(env, episode, t, ob, 10, "Episode finished after {} timesteps".format(t+1))
                     break
 
 The full code is `tutorial/tutorial.py <https://github.com/okdshin/Yender/blob/master/tutorial/tutorial.py>`_.
