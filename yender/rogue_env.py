@@ -185,8 +185,8 @@ class RogueEnv:
     #    S=(1,0)
     def reset(self, map_, start_direction, start_position):
         self.map_ = map_
-        self.agent_direction = start_direction
-        self.agent_position = start_position
+        self.agent_direction = np.asarray(start_direction)
+        self.agent_position = np.asarray(start_position)
 
     def print_map(self):
         map_ = copy.deepcopy(self.map_)
