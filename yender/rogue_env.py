@@ -175,6 +175,8 @@ def block_ob_to_hot_vectors(block_ob, block_type_num):
     return hot_vectors
 
 class RogueEnv:
+    DIRECTION_SET = {"North":[-1, 0], "South":[1, 0], "East":[0, 1], "West":[0, -1]}
+
     def __init__(self, action_set=[("move", 1), ("move", -1), ("turn", 1), ("turn", -1)]):
         self.action_set = action_set
 
