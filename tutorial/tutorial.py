@@ -57,7 +57,7 @@ class I_MazeEnv:
     def reset(self):
         self.total_reward = 0.0
         self.map_, self.indicator, start_pos, self.blue_pos, self.red_pos = make_i_maze_map()
-        start_direction = random.choice(([1, 0], [-1, 0], [0, 1], [0, -1]))
+        start_direction = random.choice(list(self.rogue_env.DIRECTION_SET.values()))
         self.rogue_env.reset(self.map_, start_direction, start_pos)
         ob = self.get_ob()
         return ob
