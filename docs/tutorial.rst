@@ -189,7 +189,6 @@ Then, don't forget render function.
 .. code-block:: python
 
         def render(self):
-            os.system("clear")
             self.rogue_env.print_map()
             print("total_reward", self.total_reward)
 
