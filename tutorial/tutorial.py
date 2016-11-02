@@ -42,6 +42,8 @@ def make_i_maze_map():
     return map_, indicator_color, start_pos, blue_pos, red_pos
 
 class I_MazeEnv:
+    max_step = 50
+
     def __init__(self):
         self.rogue_env = yender.RogueEnv()
 
@@ -55,6 +57,7 @@ class I_MazeEnv:
         return ob
 
     def reset(self):
+        self.t = 0
         self.total_reward = 0.0
         self.map_, self.indicator, start_pos, self.blue_pos, self.red_pos = make_i_maze_map()
         start_direction = random.choice(list(self.rogue_env.DIRECTION_SET.values()))
@@ -72,6 +75,9 @@ class I_MazeEnv:
         elif self.rogue_env.map_.get_block(self.rogue_env.agent_position).name == "blue_tile":
             done = True
             reward = 1.0 if self.indicator == "G" else -1.0
+        elif self.t == self.max_step:
+            done = True
+            reward = -0.04
         else:
             done = False
             reward = -0.04
@@ -79,6 +85,7 @@ class I_MazeEnv:
         # get observation
         ob = self.get_ob()
 
+        self.t += 1
         self.total_reward += reward
         return ob, reward, done, self.rogue_env
 
